@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	th:include="plantilla/template :: page">
+<head th:replace="plantilla/template :: head">
+</head>
+<body>
+	<div class="container" th:fragment="content">
+		<h1>Alerta!!</h1>
+		<h1>La acci&oacute;n que intenta ejecutar es inv&aacute;lida o no tiene los permisos</h1>
+	</div>
+	<div th:fragment="footer"></div>
+</body>
+</html>

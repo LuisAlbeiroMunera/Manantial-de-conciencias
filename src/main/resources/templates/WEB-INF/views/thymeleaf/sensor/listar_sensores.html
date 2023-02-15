@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	th:include="plantilla/template :: page">
+	
+<head th:replace="plantilla/template :: head">
+
+<title th:text="${titulo}">Listado de levantes</title>
+</head>
+<body>
+	<div class="container-fluid" th:fragment="content">
+		<div class="card">
+
+			<div class="card-body">
+				<div class="text-primary" align="center">
+
+					<h1>
+						<i th:text="${titulo}"></i>
+					</h1>
+					
+					<form method="post" th:object="${sensor}" th:action="@{/filtrarSensores}">
+						
+						<div class="form-group">
+							
+						
+						<div class="form-group btn col-sm-12 col-md-4 col-lg-3">	
+							<label for="codigo"	id="codigo">C&oacute;digo* : </label> 
+							<input type="text"	th:field=*{codigo} class="form-control" />
+			
+						</div>
+							
+						<div class="form-group btn col-sm-12 col-md-4 col-lg-3">	
+							<label for="descripcion" id="descripcion">Descripci&oacute;n* : </label> 
+							<input type="text" th:field=*{descripcion} class="form-control" /> 
+					
+						</div>
+						
+						<div class="form-group btn col-sm-12 col-md-4 col-lg-3">
+							<label for="estado" th:field=*{estado} id="estado">estado* :</label>
+							 <select class="form-control" name="estado">
+	
+								<option value="1">Seleccionar</option>
+								<option value="1">Activo</option>
+								<option value="0">Inactivo</option>
+	
+							</select>
+						</div>
+			
+						
+			<input class="btn btn-outline-warning btn-sm" type="submit" th:value="${accion}" />
+			</div>
+												
+				</form>
+				</div>
+				<div th:if="${#lists.isEmpty(sensores)}"class="alert alert-success" th:text="'No hay datos para mostrar'"></div>
+				<div class="form-group mt-3 d-flex flex-row-reverse" >
+					<a th:href="@{/formularioSensor}" class="btn btn-outline-success">Nuevo</a>
+					<a th:href="@{/inicio}" class="btn btn-outline-success">Inicio</a>
+				</div>
+				<form method="post" th:object="${sensor}" id="listarSensores" th:action="@{/modificarSensor}"> 
+					<input  type="hidden" th:field=*{id} id="idSensor" />
+					<table th:if="${not #lists.isEmpty(sensores)}" class="table table-striped table-sm">
+					
+						<tr>
+						<th>Id</th>
+						<th>C&oacute;digo</th>
+						<th>Descripci&oacute;n</th>							
+						<th>Registros</th>
+						<th>Opciones</th>								
+						</tr>
+						
+						<tr th:each="S : ${sensores}">	
+						<td> 
+						<a th:onclick="'javascript:consultar(' + ${S.id} + ');'"  class="btn btn-outline-primary btn-sm" th:text="${S.id}">
+						</a>
+						</td>				
+						
+						<th th:text="${S.codigo} "></th>
+						<th th:text="${S.descripcion}"></th>	
+<!-- 						<th th:text="${S.registros.regFlujoAgua}"></th>		 -->
+						<td> 
+						<a th:if="${S.estado == '1'}" th:onclick="'javascript:modificar(' + ${S.id} + ');'"  class="btn btn-outline-warning btn-sm" th:text="'modificar'">
+						</a>
+						<a th:if="${S.estado == '1'}" th:onclick="'javascript:inactivar(' + ${S.id} + ');'" class="btn btn-outline-danger btn-sm" th:text="'inactivar'">
+						</a>
+						<a th:if="${S.estado == '0'}" th:onclick="'javascript:activar(' + ${S.id} + ');'" class="btn btn-outline-primary btn-sm" th:text="'activar'">
+						</a>
+						</td>
+						</tr>
+					
+					</table>
+					</form>
+						</div>
+					<script type="text/javascript">
+						function modificar(id){
+							$("#idSensor").val(id);
+							var respuesta = confirm("Esta seguro que desea modificar el sensor id: "+$("#idSensor").val());
+							if (respuesta) {					
+							$("#listarSensores").submit();
+						}
+						}
+						function inactivar(id){
+							$("#idSensor").val(id);
+							var respuesta = confirm("Esta seguro que desea inactivar el sensor con id: "+$("#idSensor").val());
+							if (respuesta) {
+							$("#listarSensores").attr("action","inactivarSensor");
+							$("#listarSensores").submit();
+						}}
+						
+						function activar(id){
+							$("#idSensor").val(id);
+							var respuesta = confirm("Esta seguro que desea activar el sensor con id: "+$("#idSensor").val());
+							if (respuesta) {
+							$("#listarSensores").attr("action","activarSensor");
+							$("#listarSensores").submit();
+						}}
+						
+						function consultar(id){
+							$("#idSensor").val(id);
+			
+							$("#listarSensores").attr("action","consultarSensor");
+							$("#listarSensores").submit();
+						}
+					</script>	
+			</div>
+				</div>
+			
+		
+</body>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	th:include="plantilla/template :: page">
+
+<head th:replace="plantilla/template :: head">
+
+<title th:text="${titulo}">Registrar ciudad</title>
+</head>
+<body>
+	<div class="container-fluid" th:fragment="content">
+		<div class="card">
+
+			<div class="card-body">
+				<div class="text-primary" align="center">
+
+					<h1>
+						<i th:text="${titulo}"></i>
+					</h1>
+				</div>
+
+				<form method="post" th:object="${ciudad}"
+					th:action="@{/registrarCiudad}">
+
+					<label for="id" id="id"></label>
+
+
+					<div class="form-group btn col-sm-12 col-md-4 col-lg-3">
+						<label for="codigo" id="codigo">C&oacute;digo* :</label>
+						<input	type="text" th:field=*{codigo} class="form-control" />
+						<small class="text-danger" th:if="${#fields.hasErrors('codigo')}" th:errors="*{codigo}"></small><br>
+					</div>
+
+					<div class="form-group btn col-sm-12 col-md-4 col-lg-3">
+						<label for="nombre" id="nombre">Nombre* : </label> <input
+							type="text" th:field=*{nombre} class="form-control" />
+						<small class="text-danger" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></small><br>
+					</div>
+
+						<div class="form-group btn col-sm-12 col-md-4 col-lg-3">
+							<label for="departamento">Departamentos* </label>
+							<select th:field="*{departamento.id}" class="form-control">
+								<option value="">Seleccionar</option>
+								<option th:each="D : ${departamentos}" th:text="${D.nombre}"	th:value="${D.id}"></option>
+							</select>
+							</div>
+					<div class="form-group mt-3 d-flex flex-row-reverse">
+						<input class="btn btn-sm btn-info" type="submit"
+							th:value="${accion}" />							
+							<a th:href="@{/listarCiudades}"
+							class="btn btn-outline-success">Volver</a>
+					</div>
+
+
+
+				</form>
+			</div>
+		</div>
+	</div>
+</body>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	th:include="plantilla/template :: page">
+	
+<head th:replace="plantilla/template :: head">
+<title th:text="${titulo}">Consultar granjas</title>
+</head>
+<body>
+	<div class="container-fluid" th:fragment="content">
+		<div class="card">
+
+			<div class="card-body">
+				<div class="text-primary" align="center">
+
+					<h1>
+						<i th:text="${titulo}"></i>
+					</h1>
+				</div>
+
+				<div class="card-body">
+
+					<ul class="list-group">
+						<li class="list-group-item" th:text="'C&oacute;digo: ' + ${granja.codigo}"></li>
+
+						<li class="list-group-item"	th:text="'Descripci&oacute;n: ' + ${granja.descripcion}"></li>
+						<li class="list-group-item"	th:text="'Estado ' + ${granja.estado}"></li>
+						<li th:each="C: ${ciudades}" th:text="${C.nombre}" th:value="${C.id}"></li>
+					</ul>
+					<div class="form-group mt-3 d-flex flex-row-reverse">
+						<a th:href="@{/listarGranjas}" class="btn btn-outline-success">Granjas</a>
+
+						<a th:href="@{/inicio}" class="btn btn-outline-success">Men&uacute;</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>

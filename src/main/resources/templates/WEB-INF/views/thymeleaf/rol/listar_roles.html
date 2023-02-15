@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	th:include="plantilla/template :: page">
+	
+<head th:replace="plantilla/template :: head">
+
+<title th:text="${titulo}">Listado de roles</title>
+	
+</head>
+<body>
+	<div class="container-fluid" th:fragment="content">
+		<div class="card">
+
+			<div class="card-body">
+				<div class="text-primary" align="center">
+
+					<h1>
+						<i th:text="${titulo}"></i>
+					</h1>
+				</div>
+				
+				
+				<form method="post" th:object="${rol}" th:action="@{/filtrarRol}">
+					
+						<div class="form-group btn col-sm-12 col-md-4 col-lg-3">	
+							<label  for="codigo" id="codigo">C&oacute;digo* : </label> 
+							<input type="text" th:field=*{codigo} class="form-control" /> 
+						</div>
+					<div class="form-group btn col-sm-12 col-md-4 col-lg-3">	
+							<label  for="nombreRol" id="nombreRol">Descripci&oacute;n* : </label> 
+							<input type="text" th:field=*{nombreRol} class="form-control" /> 
+						</div>
+						
+					<div class="form-group btn col-sm-12 col-md-4 col-lg-3">							
+				
+						<label for="estado" id="estado">Estado* : </label> 
+							<select id="estado" name="estado" class="form-control">
+								<option value="1">Seleccione</option>
+								<option value=1>Activo</option>
+								<option value=0>Inactivo</option>
+					
+							</select><br>
+							</div>
+							
+							
+								<input class="btn btn-outline-warning btn-sm "  type="submit" th:value="${accion}" />
+							
+						
+							
+						
+				</form>
+				<div th:if="${#lists.isEmpty(roles)}"class="alert alert-success" th:text="'No hay datos para mostrar'"></div>
+				
+				<div class="form-group mt-3 d-flex flex-row-reverse" >
+				<a th:href="@{/formularioRol}" class="btn btn-outline-success">Nuevo</a>
+					<a th:href="@{/inicio}" class="btn btn-outline-success">Menu</a>
+				</div>
+				<form method="post" th:object="${rol}" id="listaRoles" th:action="@{/modificarRol}"> 
+					<input  type="hidden"	th:field=*{id} id="idrol" />
+					<table th:if="${not #lists.isEmpty(roles)}" class="table table-striped table-sm">
+					
+						<tr>
+						<th>Identificaci&oacute;n</th>
+						<th>C&oacute;digo</th>
+						<th>Descripci&oacute;n</th>	
+						<th>Estado</th>					
+						<th>Opciones</th>									
+						</tr>
+						
+						<tr th:each="R : ${roles}">
+						<td> 
+						<a th:onclick="'javascript:consultar(' + ${R.id} + ');'"  class="btn btn-outline-primary btn-sm" th:text="${R.id}">
+						</a>
+						</td>
+						
+						<td th:text="${R.codigo} "></td>
+						<td th:text="${R.nombreRol} "></td>
+						<td th:text="${R.estado} "></td>
+				
+						
+						<td> 
+						<a th:if="${R.estado == '1'}" th:onclick="'javascript:inactivar(' + ${R.id} + ');'"  class="btn btn-outline-danger btn-sm" th:text="'inactivar'">
+						</a>
+						<a th:if="${R.estado == '0'}" th:onclick="'javascript:activar(' + ${R.id} + ');'"  class="btn btn-outline-primary btn-sm" th:text="'activar'">
+						</a>
+						</td>
+					
+						
+						</tr>
+						
+					</table>
+					</form>					
+			
+				</div>
+					<script type="text/javascript">
+						function modificar(id){
+							$("#idrol").val(id);
+							alert("Esta seguro que desea modificar el rol #: "+$("#idrol").val());
+							$("#listaRoles").submit();
+						}
+						
+						function inactivar(id){
+							$("#idrol").val(id);
+							var respuesta = confirm("Esta seguro que desea inactivar el rol#: "+$("#idrol").val());
+							
+							if (respuesta) {
+								$("#listaRoles").attr("action","inactivarRol");
+								$("#listaRoles").submit();
+							}
+						
+						}
+						
+						function activar(id){
+							$("#idrol").val(id);
+							var respuesta = confirm("Esta seguro que desea activar el rol#: "+$("#idrol").val());
+							
+							if (respuesta) {
+								$("#listaRoles").attr("action","activarRol");
+								$("#listaRoles").submit();
+							}
+						
+						}
+						
+						function consultar(id){
+							$("#idrol").val(id);
+// 					
+							$("#listaRoles").attr("action","consultarRol");
+							$("#listaRoles").submit();
+						}
+					</script>	
+			</div>
+		</div>	
+</body>

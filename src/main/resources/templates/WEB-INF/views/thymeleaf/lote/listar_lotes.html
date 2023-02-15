@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	th:include="plantilla/template :: page">
+	
+<head th:replace="plantilla/template :: head">
+
+<title th:text="${titulo}">Listado de lotes</title>
+</head>
+<body>
+	<div class="container-fluid" th:fragment="content">
+		<div class="card">
+
+			<div class="card-body">
+				<div class="text-primary" align="center">
+
+					<h1>
+						<i th:text="${titulo}"></i>
+					</h1>
+				</div>
+				
+				<form method="post" th:object="${lote}" th:action="@{/filtrarLotes}">
+														
+						
+						<div class="form-group btn col-sm-12 col-md-4 col-lg-3">	
+							<label for="codigo"	id="codigo">C&oacute;digo: </label> 
+							<input type="text"	th:field=*{codigo} class="form-control" />
+												</div>
+							
+						<div class="form-group btn col-sm-12 col-md-4 col-lg-3">	
+							<label for="descripcion" id="descripcion">Descripci&oacute;n: </label> 
+							<input type="text" th:field=*{descripcion} class="form-control" /> 
+							</div>
+							
+<!-- 						<div class="form-group btn col-sm-12 col-md-4 col-lg-3">	 -->
+<!-- 							<label for="fecha_entrada" id="fecha_entrada">Fecha entrada: </label>  -->
+<!-- 							<input  placeholder="dd/mm/aaaa" type="text" th:field=*{fecha_entrada} class="form-control" />  -->
+<!-- 						</div> -->
+
+						<div class="form-group btn col-sm-12 col-md-4 col-lg-3">
+							<label for="estado" th:field=*{estado} id="estado">estado* :</label>
+							 <select class="form-control" name="estado">
+	
+								<option value="1">Seleccionar</option>
+								<option value="1">Activo</option>
+								<option value="0">Inactivo</option>
+	
+							</select>
+						</div>
+	
+				<input class="btn btn-outline-warning btn-sm "  type="submit" th:value="${accion}" />
+					
+								
+				</form>
+				<div th:if="${#lists.isEmpty(lotes)}"class="alert alert-success" th:text="'No hay datos para mostrar'"></div>
+				<div class="form-group mt-3 d-flex flex-row-reverse" >
+					<a th:href="@{/formularioLote}" class="btn btn-outline-success">Nuevo</a>
+					<a th:href="@{/inicio}" class="btn btn-outline-success">Inicio</a>
+				</div>
+				<form method="post" th:object="${lote}" id="listaLotes" th:action="@{/modificandoLote}"> 
+					<input  type="hidden" th:field=*{id} id="idlote" />
+					<table th:if="${not #lists.isEmpty(lotes)}" class="table table-striped table-sm">
+					
+						<tr>
+						<th>Id</th>
+						<th>C&oacute;digo</th>
+						<th>Descripci&oacute;n</th>	
+						<th>Fecha entrada</th>
+						<th>Cantidad</th>
+						<th>Costo unitario</th>		
+						
+						<th>Opciones</th>								
+						</tr>
+						
+						<tr th:each="L : ${lotes}">	
+						<td> 
+						<a th:onclick="'javascript:consultar(' + ${L.id} + ');'"  class="btn btn-outline-primary btn-sm" th:text="${L.id}">
+						</a>
+						</td>				
+						
+						<th th:text="${L.codigo} "></th>
+						<th th:text="${L.descripcion}"></th>			
+						<th th:text="${#dates.format(L.fecha_entrada, 'dd/MM/yyyy')}"></th>
+						<th th:text="${#numbers.formatDecimal(L.cantidad, 1, 'COMMA', 2, 'POINT')}"></th>
+						<th th:text="${#numbers.formatDecimal(L.costo_unitario, 1, 'COMMA', 2, 'POINT')}"></th>
+						<td> 
+						<a th:if="${L.estado == '1'}" th:onclick="'javascript:modificarLote(' + ${L.id} + ');'"  class="btn btn-outline-warning btn-sm" th:text="'modificar'">
+						</a>
+						<a th:if="${L.estado == '1'}" th:onclick="'javascript:inactivarLote(' + ${L.id} + ');'" class="btn btn-outline-danger btn-sm" th:text="'inactivar'">
+						</a>
+						<a th:if="${L.estado == '0'}" th:onclick="'javascript:activarLote(' + ${L.id} + ');'" class="btn btn-outline-primary btn-sm" th:text="'activar'">
+						</a>
+						</td>
+						</tr>
+					
+					</table>
+					</form>
+						</div>
+					<script type="text/javascript">
+						function modificarLote(id){
+							$("#idlote").val(id);
+						
+							var respuesta = confirm("Esta seguro que desea modificar el lote id: "+$("#idlote").val());
+							if (respuesta) {					
+							
+							$("#listaLotes").submit();
+						}
+							}
+						
+						function inactivarLote(id){
+							$("#idlote").val(id);
+							var respuesta = confirm("Esta seguro que desea inactivar el lote id: "+$("#idlote").val());
+							if (respuesta) {
+							$("#listaLotes").attr("action","inactivarLote");
+							$("#listaLotes").submit();
+						}
+							}
+						
+						function activarLote(id){
+							$("#idlote").val(id);
+							var respuesta = confirm("Esta seguro que desea activar el lote id: "+$("#idlote").val());
+							if (respuesta) {
+							$("#listaLotes").attr("action","activarLote");
+							$("#listaLotes").submit();
+						}
+							}
+						function consultar(id){
+							$("#idlote").val(id);
+							alert("enviando"+$("#idlote").val());
+							$("#listaLotes").attr("action","consultarLote");
+							$("#listaLotes").submit();
+						}
+					</script>	
+			</div>
+				</div>
+			
+		
+</body>

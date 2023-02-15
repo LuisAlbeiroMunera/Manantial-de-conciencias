@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	th:include="plantilla/template :: page">
+	
+<head th:replace="plantilla/template :: head">
+
+	<title th:text="${titulo}">Registrar levante</title>
+</head>
+<body>
+	<div class="container-fluid" th:fragment="content">
+		<div class="card">
+
+			<div class="card-body">
+				<div class="text-primary" align="center">
+
+					<h1>
+						<i th:text="${titulo}"></i>
+					</h1>
+				</div>
+
+					<div class="card-body">
+						
+					<ul class="list-group">
+						
+						
+						<li class="list-group-item"	th:text="'C&oacute;digo: ' + ${Levante.codigo}"></li>
+
+						<li class="list-group-item" th:text="'Descripci&oacute;n: ' + ${Levante.descripcion}"></li>
+
+						<li class="list-group-item"	th:text="'Fecha entrada: ' + ${Levante.fecha_entrada}"></li>
+						
+						<li class="list-group-item" th:text="'Cantidad entrada: ' + ${Levante.cantidad_entrada}"></li>
+						
+						<li class="list-group-item"	th:text="'Fecha salida: ' + ${Levante.fecha_salida}"></li>
+
+						<li class="list-group-item"	th:text="'Cantidad salida: ' + ${Levante.cantidad_salida}"></li>
+						
+						<li class="list-group-item"	th:text="'Lote: ' + ${Levante.lote}"></li>
+						
+						<li class="list-group-item"	th:text="'Galp&oacute;n: ' + ${Levante.galpon}"></li>
+					</ul>
+	
+						<div class="form-group mt-3 d-flex flex-row-reverse" >						
+							<a th:href="@{/listarLevantes}" class="btn btn-outline-success">Levantes</a>
+
+							<a th:href="@{/inicio}" class="btn btn-outline-success">Men&uacute;</a>
+						</div>
+				</div>
+			
+			</div>
+		</div>
+	</div>
+</body>

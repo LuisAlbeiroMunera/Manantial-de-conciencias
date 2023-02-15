@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" th:fragment="page">
+<head th:fragment="head">
+<meta http-equiv = "Content-Type" content = "text/html; charset = utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<!-- -------------------favicon--------------------------- -->
+<link rel="icon" href="" sizes="32x32">
+<link rel="stylesheet" th:href="@{css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{css/styles-templete.css}">
+<link rel="stylesheet" th:href="@{css/generales.css}">
+<script src="js/jquery.min.js"></script>
+<script src="js/popper.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/scripts-template.js"></script>
+<script src="js/calculos.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
+
+<!-- -------------------- Tipo de letra-------------------->
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@200;400&display=swap" rel="stylesheet">
+
+<!-- ------------Iconos ---------------------------------------->
+
+<!-- CSS -->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	
+<!-- JS -->
+<script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+<!--------------------- Fin Iconos ---------------------------------->
+
+<!-- ------------------------Tables --------------------------------->
+<link rel="stylesheet" th:href="@{css/table/table.css}">
+<link rel="stylesheet" th:href="@{css/table/bootstrap.css}">
+<link rel="stylesheet" th:href="@{css/table/dataTables.bootstrap4.min.css}">
+<link rel="stylesheet" th:href="@{css/table/scroller.bootstrap4.min.css}">
+<link rel="stylesheet" th:href="@{css/table/buttons.bootstrap4.min.css}">
+<link rel="stylesheet" th:href="@{css/table/responsive.dataTables.min.css}">
+
+
+  <!-- JS -->
+<script src="js/tables/table.js"></script>
+<script src="js/tables/jquery-3.5.1.js"></script>
+<script src="js/tables/jquery.dataTables.min.js"></script>
+<script src="js/tables/dataTables.bootstrap4.min.js"></script>
+<script src="js/tables/dataTables.scroller.min.js"></script>
+<script src="js/tables/dataTables.buttons.min.js"></script>
+<script src="js/tables/buttons.bootstrap4.min.js"></script>
+<script src="js/tables/jszip.min.js"></script>
+<script src="js/tables/pdfmake.min.js"></script>
+<script src="js/tables/vfs_fonts.js"></script>
+<script src="js/tables/buttons.html5.min.js"></script>
+<script src="js/tables/buttons.colVis.min.js"></script>
+<script src="js/tables/dataTables.responsive.min.js"></script>
+<script src="js/tables/dataTable-sum.js"></script>
+
+<!-- ------------------------Fin Tables --------------------------------->
+
+
+<!-----------------------Menu-------------------------->
+<link rel="stylesheet" th:href="@{css/menu.css}">
+<script src="js/searchMenu.js"></script>
+<!-- --------------------Fin Menu------------------- -->
+<title>SmartJfm</title>  
+</head>
+<body>
+
+	<!-- navbar -->
+	<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+		<a class="navbar-brand text-titulo" href="index.html"> avismart
+			<span class="titulo">avismart</span>
+		</a>
+		<ul class="navbar-nav ml-auto ml-md-10">
+			<li class="nav-item dropdown"><a
+				class="nav-link dropdown-toggle" id="userDropdown" href="#"
+				role="button" data-toggle="dropdown" aria-haspopup="true"
+				aria-expanded="false"> <i class="fas fa-user fa-fw"></i>
+			</a>
+				<div class="dropdown-menu dropdown-menu-right"
+					aria-labelledby="userDropdown">
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="/avismart/logout">Salir</a>
+				</div></li>
+		</ul>
+		<button type="button" class="navbar-toggler bg-principal"
+			data-toggle="collapse" data-target="#nav" style="padding:5px;">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+	</nav>
+
+	<div class="collapse navbar-collapse justify-content-between bg-dark"
+		id="nav">
+		<a id="principal" class="nav-link text-menus2 resalto2"
+			style="color: white;" href="index.html">Principal</a>
+			<br>
+		<ol id="myMenu">
+			<li th:each="principal : ${session.menu}">
+				<ul id="menuList">
+					<div class="collapsed" data-toggle="collapse"
+						th:attr="data-target= '#collapseLayouts' + ${principal.id}"
+						aria-expanded="false" aria-controls="collapseLayouts"
+						th:if="${principal.jerarquia} == 0">
+						<a class="nav-link text-menus2 resalto2"
+							th:text="${principal.nombreMenu}" th:href="@{${principal.recurso}}">
+							<i class="fas fa-columns"></i>
+						</a>
+					</div>
+					<li th:each="subMenu: ${session.menu}"
+						th:if="${subMenu.jerarquia} == ${principal.id}" class="collapse"
+						data-toggle="collapse"
+						th:attr="id= 'collapseLayouts' + ${subMenu.jerarquia}"
+						aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+						<nav class="subMenu sb-sidenav-menu-nested nav">
+							<a class="resalto2" th:text="${subMenu.nombreMenu}"
+								th:href="@{${subMenu.recurso}}" style="color: white;"></a>
+						</nav>
+					</li>
+				</ul>
+			</li>
+		</ol>
+	</div>
+	<br>
+	<br>
+	<div id="layoutSidenav" style="margin-top: 9px;">
+		<div id="layoutSidenav_nav">
+			<nav class="sb-sidenav accordion sb-sidenav-dark"
+				id="sidenavAccordion">
+				<div class="sb-sidenav-menu image">
+					<input class="text-menu input-sm" type="text" id="mySearch"
+						onkeyup="buscarMenu()" placeholder="Buscar..."
+						title="Type in a category"> <a id="principal"
+						class="nav-link text-menu resalto" href="index.html">Principal</a>
+
+					<ol id="myMenu">
+						<li th:each="principal : ${session.menu}">
+							<ul id="menuList">
+								<div class="collapsed" data-toggle="collapse"
+									th:attr="data-target= '#collapseLayouts' + ${principal.id}"
+									aria-expanded="false" aria-controls="collapseLayouts"
+									th:if="${principal.jerarquia} == 0">
+									<a class="nav-link text-menu resalto"
+										th:text="${principal.nombreMenu}"
+										th:href="${principal.recurso}"> <i class="fas fa-columns"></i>
+									</a>
+								</div>
+								<li th:each="subMenu: ${session.menu}"
+									th:if="${subMenu.jerarquia} == ${principal.id}"
+									class="collapse" data-toggle="collapse"
+									th:attr="id= 'collapseLayouts' + ${subMenu.jerarquia}"
+									aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+									<nav class="subMenu sb-sidenav-menu-nested nav">
+										<a th:text="${subMenu.nombreMenu}"
+											th:href="@{${subMenu.recurso}}"></a>
+									</nav>
+								</li>
+							</ul>
+						</li>
+					</ol>
+
+				</div>
+				<div class="sb-sidenav-footer">
+					<div class="titulo" th:text="${session.user}"></div>
+				</div>
+			</nav>
+		</div>
+		<div id="layoutSidenav_content" style="padding:20px;">
+			<main id="main">
+				<div class="container-fluid" th:include="this :: content"
+					style="padding: 10;">Aqu&iacute; se muestran todas las p&aacute;ginas</div>
+			</main>
+		</div>
+	</div>
+</body>
+</html>

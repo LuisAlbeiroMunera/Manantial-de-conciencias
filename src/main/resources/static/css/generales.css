@@ -1,0 +1,31 @@
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+.succes{
+ border: 2px solid green;
+ color: green;	
+}
+
+
+.noVisible {
+	display: none;
+}
+
+
+.visible {
+ display: block;	
+}
+
+.textoDanger{
+	font-weight: bold;
+	color: #ff0000!important;
+	font-weight: 900;
+}
+
+.responsive-image{
+  width: 100%;
+  height: auto;
+}

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	th:replace="plantilla/template :: header">
+<head>
+</head>
+<body>
+
+	<div class="container" th:fragment="messages">
+
+		<div class="alert alert-success alert-dismissible fade show" th:if="${success != null}">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<strong>Exito!</strong> <label th:text ="${success}"></label>
+		</div>
+		<div class="alert alert-danger alert-dismissible fade show" th:if="${error != null}">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<strong>Error!</strong> <label th:text ="${error}"></label>
+		</div>
+		<div class="alert alert-warning alert-dismissible fade show" th:if="${warning != null}">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<strong>Advertencia!</strong> <label th:text ="${warning}"></label>
+		</div>
+		<div class="alert alert-info alert-dismissible fade show" th:if="${info!= null}">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<strong>Infoormacion!</strong> <label th:text ="${info}"></label>
+		</div>
+	</div>
+</body>
+</html>

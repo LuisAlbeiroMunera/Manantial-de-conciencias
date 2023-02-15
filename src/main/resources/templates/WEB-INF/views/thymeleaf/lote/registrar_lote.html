@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	th:include="plantilla/template :: page">
+	
+<head th:replace="plantilla/template :: head">
+
+
+<title th:text="${titulo}">Registrar lote</title>
+</head>
+<body>
+	<div class="container-fluid" th:fragment="content">
+		<div class="card">
+
+			<div class="card-body">
+				<div class="text-primary" align="center">
+
+					<h1>
+						<i th:text="${titulo}"></i>
+					</h1>
+				</div>
+
+				<form method="post" th:object="${lote}" th:action="@{/registrarLote}">
+								
+							<label for="id" id="id"></label>
+					
+							
+						
+						<div class="form-group btn col-sm-12 col-md-4 col-lg-3">	
+							<label for="codigo"	id="codigo">C&oacute;digo* : </label> 
+							<input type="text"	th:field=*{codigo} class="form-control" />
+							<small class="text-danger" th:if="${#fields.hasErrors('codigo')}" th:errors="*{codigo}"></small><br> 
+						</div>
+							
+						<div class="form-group btn col-sm-12 col-md-4 col-lg-3">	
+							<label for="descripcion" id="descripcion">Descripci&oacute;n* : </label> 
+							<input type="text" th:field=*{descripcion} class="form-control" /> 
+							<small class="text-danger" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"></small><br>
+						</div>
+							
+						<div class="form-group btn col-sm-12 col-md-4 col-lg-3">	
+							<label for="fecha_entrada" id="fecha_entrada">Fecha entrada* : </label> 
+							<input  placeholder="dd/mm/aaaa" type="text" th:field=*{fecha_entrada} class="form-control" /> 
+							<small class="text-danger" th:if="${#fields.hasErrors('fecha_entrada')}" th:errors="*{fecha_entrada}"></small><br>
+						</div>
+							
+						<div class="form-group btn col-sm-12 col-md-4 col-lg-3">	
+							<label for="cantidad" id="cantidad">Cantidad* : </label> 
+							<input type="text" th:field=*{cantidad} class="form-control" /> 
+							<small class="text-danger" th:if="${#fields.hasErrors('cantidad')}" th:errors="*{cantidad}"></small><br>
+						</div>
+							
+						<div class="form-group btn col-sm-12 col-md-4 col-lg-3">	
+							<label for="costo_unitario" id="costo_unitario">Costo unitario* : </label> 
+							<input type="text" th:field=*{costo_unitario} class="form-control" /> 
+							<small class="text-danger" th:if="${#fields.hasErrors('costo_unitario')}" th:errors="*{costo_unitario}"></small><br>
+						</div>
+	
+	
+	
+	
+						<div class="form-group mt-3 d-flex flex-row-reverse" >						
+		
+							<input class="btn btn-sm btn-info" type="submit" th:value="${accion}" />
+							<a th:href="@{/inicio}" class="btn btn-outline-success">Men&uacute;</a>
+						</div>
+											
+				</form>
+			</div>
+		</div>
+	</div>
+</body>

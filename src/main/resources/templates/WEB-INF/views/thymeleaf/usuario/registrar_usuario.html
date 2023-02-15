@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	th:include="plantilla/template :: page">
+
+<head th:replace="plantilla/template :: head">
+
+<title th:text="${titulo}">Registrar usuario</title>
+</head>
+<body>
+	<div class="container-fluid" th:fragment="content">
+		<div class="card">
+
+			<div class="card-body">
+				<div class="text-primary" align="center">
+
+					<h1>
+						<i th:text="${titulo}"></i>
+					</h1>
+				</div>
+
+				<form method="post" th:object="${usuario}"
+					th:action="@{/registrarUsuario}">
+					<div class="form-group">
+
+
+						<div class="form-group btn col-sm-12 col-md-4 col-lg-3">
+							<label for="userName" id="userName">Identificaci&oacute;n* : </label> <input
+								type="text" th:field=*{userName} class="form-control" />
+							<small class="text-danger" th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}"></small><br>
+					
+						</div>
+
+						<div class="form-group btn col-sm-12 col-md-4 col-lg-3">
+							<label for="nombreUsuario" id="nombreUsuario">Nombre* : </label> <input
+								type="text" th:field=*{nombreUsuario} class="form-control" />
+								<small class="text-danger" th:if="${#fields.hasErrors('nombreUsuario')}" th:errors="*{nombreUsuario}"></small><br>
+						</div>
+
+						<div class="form-group btn col-sm-12 col-md-4 col-lg-3">
+							<label for="email" id="email">Correo* : </label> <input
+								type="text" th:field=*{email} class="form-control" />
+						<small class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small><br>
+						</div>
+
+						<div class="form-group btn col-sm-12 col-md-4 col-lg-3">
+							<label for="telefono" id="telefono">Tel&eacute;fono* : </label> <input
+								type="number" th:field=*{telefono} class="form-control" />
+							<small class="text-danger" th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}"></small><br>
+						</div>
+
+						<div th:if="${usuario.id} lt 1" class="form-group btn col-sm-12 col-md-4 col-lg-3">
+							<label for="password" id="password">Contrase&ntilde;a* :</label> <input
+								type="password" th:field=*{password} class="form-control" />
+							<small class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></small><br> 
+						</div>
+
+
+					<div class="form-group btn col-sm-12 col-md-4 col-lg-3">
+						<label for="listaRoles" id="listaRoles">Roles* :</label> <select
+							th:field=*{listaRoles} class="form-control">
+
+							<option value="">Seleccionar</option>
+							<option th:each="R: ${roles}"
+								th:text="${R.nombreRol}" th:value="${R.id}"></option>
+
+						</select>
+						<small class="text-danger" th:if="${#fields.hasErrors('listaRoles')}" th:errors="*{listaRoles}"></small><br> 
+					</div>
+
+						<div class="form-group mt-3 d-flex flex-row-reverse">
+
+
+							<input class="btn btn-sm btn-info" type="submit"
+								th:value="${accion}" /> <a th:href="@{/listarUsuarios}"
+								class="btn btn-outline-success">Volver</a>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+
+	</div>
+</body>
