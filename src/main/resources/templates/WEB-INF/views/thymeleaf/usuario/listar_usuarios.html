@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	th:include="plantilla/template :: page">
-
+<link rel="stylesheet" type="text/css" href="static/css/index.css" th:href="@{/css/index.css}">
 <head>
 <meta charset="UTF-8"
 th:replace="plantilla/template :: head">
@@ -10,10 +10,10 @@ th:replace="plantilla/template :: head">
 </head>
 <body>
 
-	<div class="container-fluid" th:fragment="content">
+	<div class="container-fluid" th:fragment="content" >
 		<div class="card">
 
-			<div class="card-body">
+			<div class="card-body" >
 				<div class="text-primary" align="center">
 
 					<h1>
@@ -84,7 +84,7 @@ th:replace="plantilla/template :: head">
 						<tr th:each="U : ${usuarios}">
 
 							<td><a th:onclick="'javascript:consultar(' + ${U.id} + ');'"
-								class="btn btn-outline-primary btn-sm" th:text="${U.id}"> </a></td>
+								class="btn btn-outline-primary btn-sm" th:text="'imprimir'"> </a></td>
 							
 							<td th:text="${U.userName} "></td>
 							<td th:text="${U.nombreUsuario}"></td>
@@ -152,6 +152,7 @@ th:replace="plantilla/template :: head">
 					$("#listaUsuarios").attr("action", "consultarUsuario");
 					$("#listaUsuarios").submit();
 				}
+
 			</script>
 		</div>
 	</div>
