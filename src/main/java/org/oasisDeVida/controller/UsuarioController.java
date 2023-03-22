@@ -129,7 +129,9 @@ public class UsuarioController {
 //		return "redirect:/registrarUsuario";
 	}
 
-	@GetMapping("/listarUsuarios")
+	@GetMapping("/listarUsuarios"
+			
+			)
 	public String listaUsuarios(Model modelo) {		
 		Usuario usuario = new Usuario();
 		modelo.addAttribute("accion", "Filtrar");
