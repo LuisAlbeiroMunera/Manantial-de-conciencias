@@ -1,6 +1,10 @@
 package org.oasisDeVida.controller;
 import java.util.List;
+<<<<<<< HEAD
 //Cambio 2
+=======
+//Cambio1
+>>>>>>> f313e60c7c2a63ad3ce66d2376b8e7e3b126be77
 import javax.validation.Valid;
 
 import org.oasisDeVida.modelo.dao.IBebederoDAO;
