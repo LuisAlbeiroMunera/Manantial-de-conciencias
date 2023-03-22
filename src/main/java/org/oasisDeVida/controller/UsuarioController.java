@@ -133,6 +133,8 @@ public class UsuarioController {
 			
 			)
 	public String listaUsuarios(Model modelo) {		
+		
+		
 		Usuario usuario = new Usuario();
 		modelo.addAttribute("accion", "Filtrar");
 		List<Rol> roles = rolRepository.findByEstado("1");
