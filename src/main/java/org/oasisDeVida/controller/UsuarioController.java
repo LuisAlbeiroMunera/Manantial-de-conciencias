@@ -149,7 +149,7 @@ public class UsuarioController {
 		usuarioDataSource.addUsuario(usuarioEncontrado);
 		
 		try {
-			inputStream = new FileInputStream("/C:\\workspaceLuis\\manantialDeConciencias\\src\\main\\java\\reportes/SubReport.jrxml");
+			inputStream = new FileInputStream("/C:\\workspaceLuis\\manantialDeConciencias\\src\\main\\java\\reportes");
 		} catch (FileNotFoundException e) {
 			JOptionPane.showMessageDialog(null,"Error al leer el fichero para la carga del reporte"+ e.getMessage());
 		}
