@@ -1,5 +1,4 @@
 package org.oasisDeVida.controller;
-//Cambio realizado para prueba
 import java.util.List;
 
 import javax.validation.Valid;
