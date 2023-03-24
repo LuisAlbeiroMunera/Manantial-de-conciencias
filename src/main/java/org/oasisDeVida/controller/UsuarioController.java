@@ -140,7 +140,7 @@ public class UsuarioController {
 		List<Rol> roles = rolRepository.findByEstado("1");
 		modelo.addAttribute("roles", roles);
 		modelo.addAttribute("usuario", usuario);
-		modelo.addAttribute("titulo", "Lista de usuarios");
+		modelo.addAttribute("titulo", "Listado de usuarios");
 		return "usuario/listar_usuarios";
 
 	}
