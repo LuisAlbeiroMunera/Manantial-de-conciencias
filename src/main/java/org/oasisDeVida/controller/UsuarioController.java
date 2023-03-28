@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.print.DocFlavor.INPUT_STREAM;
@@ -28,6 +29,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.thymeleaf.standard.expression.Each;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -163,6 +165,34 @@ public class UsuarioController {
 			jasperPrint = JasperFillManager.fillReport(jasperReport, null,usuarioDataSource);
 			String nombre = usuario.getNombreUsuario();
 			JasperExportManager.exportReportToPdfFile(jasperPrint, "/C:\\workspaceLuis\\manantialDeConciencias\\src\\main\\java\\reportes/" + nombre +".pdf");
+		} catch (JRException e) {
+			JOptionPane.showMessageDialog(null,"Error al cargar el archivo jrml jasper report"+ e.getMessage());
+			
+		}
+		
+	}
+	@GetMapping("/imprimirUsuarios")
+	public void imprimirUsuarios() {
+		List<Usuario> usuarioEncontrado = usuarioService.findAll();
+		InputStream inputStream = null;
+		JasperPrint jasperPrint = null;
+		UsuarioDataSource usuarioDataSource = new UsuarioDataSource();
+		for (Iterator<Usuario> iterator = usuarioEncontrado.iterator(); iterator.hasNext();) {
+			Usuario usuario2 = (Usuario) iterator.next();
+			usuarioDataSource.addUsuario(usuario2);
+		}
+		
+		
+		try {
+			inputStream = new FileInputStream("/C:\\workspaceLuis\\manantialDeConciencias\\src\\main\\java\\reportes");
+		} catch (FileNotFoundException e) {
+			JOptionPane.showMessageDialog(null,"Error al leer el fichero para la carga del reporte"+ e.getMessage());
+		}
+		try {
+			JasperDesign jasperDesign = JRXmlLoader.load(inputStream);
+			JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
+			jasperPrint = JasperFillManager.fillReport(jasperReport, null,usuarioDataSource);
+			JasperExportManager.exportReportToPdfFile(jasperPrint, "/C:\\workspaceLuis\\manantialDeConciencias\\src\\main\\java\\reportes/" + "Luis" +".pdf");
 		} catch (JRException e) {
 			JOptionPane.showMessageDialog(null,"Error al cargar el archivo jrml jasper report"+ e.getMessage());
 			
